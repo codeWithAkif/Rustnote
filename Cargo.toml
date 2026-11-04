@@ -1,0 +1,20 @@
+[package]
+name = "rustnote"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+dioxus = { version = "0.7", optional = true }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[[bin]]
+name = "rustnote"
+path = "src/main.rs"
+required-features = ["ui"]
+
+[features]
+ui = ["dep:dioxus"]
+desktop = ["ui", "dioxus/desktop"]
+mobile = ["ui", "dioxus/mobile"]
+web = ["ui", "dioxus/web"]
