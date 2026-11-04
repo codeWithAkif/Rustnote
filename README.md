@@ -1,18 +1,23 @@
 # RustNote
 
-Tamamen Rust ile yazılmış not uygulaması (arayüz + mantık). Arayüz: [Dioxus](https://dioxuslabs.com) 0.7.
+Tamamen Rust ile yazılmış not uygulaması (arayüz + mantık), [Dioxus](https://dioxuslabs.com) 0.7.
 
-- `src/store.rs`: not saklama, arama, JSON dosyasına kayıt (UI'dan bağımsız, testli)
-- `src/main.rs`: Dioxus arayüzü (liste, arama, ekleme, düzenleme, silme)
+Özellikler: not ekle/düzenle/sil, arama, etiketler, sabitleme, parola ile şifreli notlar
+(Argon2id + ChaCha20-Poly1305), çevrimdışı çalışan PWA.
 
-## Çalıştırma
+- `src/store.rs` not mantığı · `src/crypto.rs` şifreleme · `src/persist.rs` depolama (web: localStorage, diğer: dosya)
+- `src/main.rs` Dioxus arayüzü
 
+## Telefona kurulum (PWA)
+GitHub Actions uygulamayı `gh-pages` dalına yayınlar:
+**https://codewithakif.github.io/Rustnote/**
+Telefonda aç → Android Chrome: menü → "Ana ekrana ekle / Uygulamayı yükle"; iOS Safari: Paylaş → "Ana Ekrana Ekle".
+
+## Geliştirme
 ```sh
-cargo test --lib                       # çekirdek testleri
-cargo install dioxus-cli
-dx serve --platform desktop --features desktop   # masaüstü
-dx serve --platform android --features mobile    # Android (SDK + NDK gerekir)
-dx serve --platform ios --features mobile        # iOS (macOS + Xcode gerekir)
+cargo test --lib
+cargo install dioxus-cli --locked
+dx serve --platform web --features web
+dx serve --platform desktop --features desktop
+dx serve --platform android --features mobile   # Android SDK + NDK gerekir
 ```
-
-Not: Mobilde `HOME` olmayabilir; veri yolunu (`data_path`) platforma uygun uygulama dizinine çevirmek sonraki adım.

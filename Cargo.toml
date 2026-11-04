@@ -1,17 +1,27 @@
 [package]
 name = "rustnote"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 
 [dependencies]
 dioxus = { version = "0.7", optional = true }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+argon2 = "0.5"
+chacha20poly1305 = "0.10"
+getrandom = { version = "0.2", features = ["js"] }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+web-sys = { version = "0.3", features = ["Window", "Storage", "Performance"] }
 
 [[bin]]
 name = "rustnote"
 path = "src/main.rs"
 required-features = ["ui"]
+
+[profile.release]
+opt-level = "s"
+lto = true
 
 [features]
 ui = ["dep:dioxus"]

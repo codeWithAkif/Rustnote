@@ -1,0 +1,6 @@
+[application]
+name = "rustnote"
+
+[web.app]
+title = "RustNote"
+base_path = "Rustnote"

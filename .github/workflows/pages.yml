@@ -1,0 +1,36 @@
+name: Web (PWA) yayınla
+
+on:
+  push:
+    branches: [main, ccr-46c1736b-8d8bqz]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+      - uses: cargo-bins/cargo-binstall@main
+      - run: cargo binstall dioxus-cli --no-confirm --locked
+      - run: cargo test --lib --release
+      - run: dx bundle --platform web --release --features web
+      - name: gh-pages dalına yayınla
+        run: |
+          OUT=$(find target/dx -type d -name public -path '*release/web*' | head -1)
+          test -f "$OUT/index.html"
+          touch "$OUT/.nojekyll"
+          cp "$OUT/index.html" "$OUT/404.html"
+          cd "$OUT"
+          git init -q -b gh-pages
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add -A
+          git commit -q -m "Deploy ${GITHUB_SHA}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" gh-pages
