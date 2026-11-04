@@ -1,0 +1,43 @@
+name: Android APK
+
+on:
+  push:
+    branches: [main, ccr-46c1736b-8d8bqz]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 17 }
+      - uses: android-actions/setup-android@v3
+      - name: NDK kur
+        run: |
+          sdkmanager "ndk;27.0.12077973" "platforms;android-34" "build-tools;34.0.0"
+          echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/27.0.12077973" >> $GITHUB_ENV
+          echo "NDK_HOME=$ANDROID_HOME/ndk/27.0.12077973" >> $GITHUB_ENV
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android
+      - uses: Swatinem/rust-cache@v2
+      - uses: cargo-bins/cargo-binstall@main
+      - run: cargo binstall dioxus-cli --no-confirm --locked
+      - run: dx build --platform android --target aarch64-linux-android --features mobile
+      - name: APK'yı bul
+        run: |
+          APK=$(find target/dx -name '*.apk' | head -1)
+          echo "APK=$APK"; test -n "$APK"
+          cp "$APK" rustnote.apk
+      - name: Release'e yükle
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest-apk
+          name: RustNote APK (son sürüm)
+          prerelease: true
+          files: rustnote.apk
+          target_commitish: ${{ github.sha }}

@@ -21,11 +21,18 @@ fn now() -> u64 {
 fn data_key() -> String {
     "rustnote.v1".into()
 }
-#[cfg(not(target_arch = "wasm32"))]
+#[cfg(target_os = "android")]
 fn data_key() -> String {
-    // Masaüstünde HOME; mobilde uygulama dizini (yoksa çalışma dizini).
+    // Uygulamanın özel dizini: /data/data/<paket>/files
+    let pkg = std::fs::read_to_string("/proc/self/cmdline")
+        .ok()
+        .and_then(|c| c.split('\0').next().map(str::to_owned))
+        .unwrap_or_else(|| "dev.rustnote.app".into());
+    format!("/data/data/{pkg}/files/notes.json")
+}
+#[cfg(not(any(target_arch = "wasm32", target_os = "android")))]
+fn data_key() -> String {
     let base = std::env::var_os("HOME")
-        .or_else(|| std::env::var_os("TMPDIR"))
         .map(std::path::PathBuf::from)
         .unwrap_or_else(|| ".".into());
     base.join(".rustnote").join("notes.json").to_string_lossy().into_owned()
