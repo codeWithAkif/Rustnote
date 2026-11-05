@@ -1,0 +1,1 @@
+const C="adim-v1";self.addEventListener("install",()=>self.skipWaiting()),self.addEventListener("activate",e=>e.waitUntil(self.clients.claim())),self.addEventListener("fetch",e=>{e.request.method==="GET"&&e.respondWith(fetch(e.request).then(t=>{const s=t.clone();return caches.open(C).then(n=>n.put(e.request,s)),t}).catch(()=>caches.match(e.request)))});
