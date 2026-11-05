@@ -34,3 +34,14 @@ textarea.field{min-height:90px;resize:vertical}
 body{background:#151515;color:#eee}.card,.nav{background:#212121;border-color:#333}.card p{color:#bbb}
 .field,.every input{background:#2a2a2a;color:#eee;border-color:#444}.draft{background:#2a2622}.bar{background:#333}
 .streak{background:#3a2616}}
+.pre{white-space:pre-wrap}
+.insight{background:#fff0e0;border-radius:10px;padding:10px 12px;color:#9a3d0a;margin:6px 0}
+.moods{display:flex;gap:8px;margin:8px 0}
+.mood{font-size:26px;background:none;border:2px solid transparent;border-radius:12px;padding:4px 8px}
+.mood.on{border-color:#d6541a;background:#fff0e0}
+.reflect{border-top:1px dashed #ddd;margin-top:10px;padding-top:8px}
+.card.current{border:2px solid #d6541a}
+.card.summary{background:#fff8ef}
+.link-a{text-decoration:none;display:inline-block}
+h2{margin:22px 0 2px;font-size:20px}
+@media(prefers-color-scheme:dark){.insight,.mood.on,.card.summary{background:#3a2616;color:#f3c9a5}.reflect{border-color:#444}}
