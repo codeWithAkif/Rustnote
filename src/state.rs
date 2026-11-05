@@ -496,11 +496,15 @@ mod tests {
         assert!(m[3].draft.as_ref().unwrap().contains("Burak"));
         s.mark_contact(b, 100).unwrap();
         assert_eq!(s.moves(100)[3].person, Some(a));
+    }
+
+    #[test]
+    fn new_friend_without_contact() {
+        let mut s = State::default();
         let c = s.add_person("Can", Kind::Cevre, 100).unwrap();
-        s.mark_contact(a, 100).unwrap();
         let t = &s.moves(100)[3];
         assert_eq!(t.person, Some(c));
-        assert!(!t.title.contains("bugün görüştün"));
+        assert!(t.title.contains("henüz görüşme kaydın yok"));
     }
 
     #[test]
