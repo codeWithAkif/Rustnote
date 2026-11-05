@@ -23,11 +23,16 @@ jobs:
       - run: dx bundle --platform web --release --features web
       - name: gh-pages dalına yayınla
         run: |
-          OUT=$(find target/dx -type d -name public -path '*release/web*' | head -1)
-          test -f "$OUT/index.html"
-          touch "$OUT/.nojekyll"
-          cp "$OUT/index.html" "$OUT/404.html"
-          cd "$OUT"
+          set -eux
+          SRC=target/dx/adim/release/web/public
+          test -f "$SRC/index.html"
+          # Önbellekten kalan eski klasörlerden etkilenmemek için temiz bir dizine kopyala
+          SITE=$(mktemp -d)
+          cp -a "$SRC/." "$SITE/"
+          rm -rf "$SITE/.git"
+          touch "$SITE/.nojekyll"
+          cp "$SITE/index.html" "$SITE/404.html"
+          cd "$SITE"
           git init -q -b gh-pages
           git config user.name "github-actions"
           git config user.email "actions@github.com"
