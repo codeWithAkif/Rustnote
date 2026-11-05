@@ -1,10 +1,10 @@
 [application]
-name = "rustnote"
+name = "adim"
 
 [web.app]
-title = "RustNote"
+title = "Adım"
 base_path = "Rustnote"
 
 [bundle]
-identifier = "dev.rustnote.app"
-publisher = "RustNote"
+identifier = "dev.adim.app"
+publisher = "Adım"

@@ -1,6 +1,6 @@
 {
-  "name": "RustNote",
-  "short_name": "RustNote",
+  "name": "Adım",
+  "short_name": "Adım",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

@@ -1,3 +1,2 @@
-pub mod crypto;
 pub mod persist;
-pub mod store;
+pub mod state;

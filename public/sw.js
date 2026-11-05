@@ -1,5 +1,5 @@
 // Çevrimdışı çalışma: önce ağ, olmazsa önbellek.
-const C = "rustnote-v1";
+const C = "adim-v1";
 self.addEventListener("install", () => self.skipWaiting());
 self.addEventListener("activate", (e) => e.waitUntil(self.clients.claim()));
 self.addEventListener("fetch", (e) => {

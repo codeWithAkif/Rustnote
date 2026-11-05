@@ -1,23 +1,22 @@
-# RustNote
+# Adım
 
-Tamamen Rust ile yazılmış not uygulaması (arayüz + mantık), [Dioxus](https://dioxuslabs.com) 0.7.
+Günlük inisiyatif asistanı. Her sabah ev, eş, çocuk, çevre ve iş için somut hamleler önerir;
+kişilere tuttuğun notlardan beslenir. Tamamen Rust ([Dioxus](https://dioxuslabs.com) 0.7), veri telefonda kalır.
 
-Özellikler: not ekle/düzenle/sil, arama, etiketler, sabitleme, parola ile şifreli notlar
-(Argon2id + ChaCha20-Poly1305), çevrimdışı çalışan PWA.
+- `src/state.rs`: kişiler, notlar, fikir defteri ve günlük hamle üretimi (testli, UI'dan bağımsız)
+- `src/persist.rs`: depolama (web: localStorage, diğer: dosya)
+- `src/main.rs`: arayüz (Bugün, Kişiler, Fikirler)
 
-- `src/store.rs` not mantığı · `src/crypto.rs` şifreleme · `src/persist.rs` depolama (web: localStorage, diğer: dosya)
-- `src/main.rs` Dioxus arayüzü
-
-## Telefona kurulum (PWA)
-GitHub Actions uygulamayı `gh-pages` dalına yayınlar:
-**https://codewithakif.github.io/Rustnote/**
-Telefonda aç → Android Chrome: menü → "Ana ekrana ekle / Uygulamayı yükle"; iOS Safari: Paylaş → "Ana Ekrana Ekle".
+## Kurulum
+- **Android APK:** https://github.com/codeWithAkif/Rustnote/releases/tag/latest-apk
+- **Web (PWA):** https://codewithakif.github.io/Rustnote/
 
 ## Geliştirme
 ```sh
 cargo test --lib
 cargo install dioxus-cli --locked
 dx serve --platform web --features web
-dx serve --platform desktop --features desktop
 dx serve --platform android --features mobile   # Android SDK + NDK gerekir
 ```
+
+Sonraki adım: Claude API ile kişiselleştirilmiş hamleler ve iş antrenörü sohbeti (API anahtarı sunucuda tutulmalı).

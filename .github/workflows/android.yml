@@ -33,12 +33,12 @@ jobs:
         run: |
           APK=$(find target/dx -name '*.apk' | head -1)
           echo "APK=$APK"; test -n "$APK"
-          cp "$APK" rustnote.apk
+          cp "$APK" adim.apk
       - name: Release'e yükle
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest-apk
-          name: RustNote APK (son sürüm)
+          name: Adım APK (son sürüm)
           prerelease: true
-          files: rustnote.apk
+          files: adim.apk
           target_commitish: ${{ github.sha }}
